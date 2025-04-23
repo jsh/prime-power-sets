@@ -1,6 +1,9 @@
 from collections import defaultdict
 import math
 import sys
+import itertools
+
+import pandas as pd
 
 def generate_bit_count_sequence(n):
   """
@@ -70,11 +73,41 @@ def get_integer_simple():
         print(f"An unexpected error occurred: {e}", file=sys.stderr)
         sys.exit(1)
 
+def are_disjoint(num1: int, num2: int) -> bool:
+  """
+  Checks if the binary representations of two integers are disjoint
+  (share no '1' bits). Returns True if disjoint, False otherwise.
+  """
+  return (num1 & num2) == 0
+
+def find_disjoint_pairs(s: set[int]) -> list[tuple[int, int]]:
+  """
+  Finds all pairs of disjoint integers within a given set.
+
+  Args:
+    s: A set of integers.
+
+  Returns:
+    A list of tuples, where each tuple contains a pair of
+    disjoint integers from the set.
+  """
+  disjoint_pairs = []
+  # Generate all unique pairs of size 2 from the set
+  for pair in itertools.combinations(s, 2):
+    num1, num2 = pair
+    # Check if the pair is disjoint using the bitwise AND operator
+    if are_disjoint(num1, num2):
+      disjoint_pairs.append(pair)
+  return disjoint_pairs
+
+
 def main():
     n = get_integer_simple()
     seq = generate_bit_count_sequence(n)
     dups = find_exact_float_duplicates_with_indices(seq)
-    print(dups)
-    
+    for dup in dups:
+      if find_disjoint_pairs(dup[1]):
+        print(dup)
+
 if __name__ == "__main__":
     main()
