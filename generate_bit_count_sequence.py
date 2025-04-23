@@ -1,16 +1,16 @@
 import math
 
-def generate_bit_length_sequence(n):
+def generate_bit_count_sequence(n):
   """
-  Generates a list of n floating-point numbers based on the formula k / k.bit_length().
+  Generates a list of n floating-point numbers based on the formula k / k.bit_count().
 
   Args:
     n: The desired length of the sequence (a non-negative integer).
 
   Returns:
-    A list 'seq' of length n where seq[k] = k / k.bit_length() for k > 0.
-    seq[0] is defined as 0.0, as the formula k / k.bit_length() would
-    result in division by zero (0 / (0).bit_length() -> 0 / 0).
+    A list 'seq' of length n where seq[k] = k / k.bit_count() for k > 0.
+    seq[0] is defined as 0.0, as the formula k / k.bit_count() would
+    result in division by zero (0 / (0).bit_count() -> 0 / 0).
 
   Raises:
     ValueError: If n is not a non-negative integer.
@@ -28,10 +28,10 @@ def generate_bit_length_sequence(n):
       # Assigning 0.0 is a reasonable default. Alternatively, float('nan') could be used.
       seq.append(0.0)
     else:
-      # k.bit_length() returns the number of bits required for k
-      bit_len = k.bit_length()
+      # k.bit_count() returns the number of bits set in k
+      bit_count = k.bit_count()
       # Ensure floating-point division (default in Python 3)
-      seq.append(k / bit_len)
+      seq.append(k / bit_count)
 
   return seq
 
@@ -39,7 +39,7 @@ def generate_bit_length_sequence(n):
 
 # Generate a sequence of length 10
 n_elements = 10
-sequence = generate_bit_length_sequence(n_elements)
+sequence = generate_bit_count_sequence(n_elements)
 print(f"Generated sequence for n={n_elements}:")
 print(sequence)
 # Expected output for n=10 (values of k from 0 to 9):
@@ -52,28 +52,28 @@ for k, val in enumerate(sequence):
 
 # Example with n=0
 print(f"\nGenerated sequence for n=0:")
-print(generate_bit_length_sequence(0)) # Output: []
+print(generate_bit_count_sequence(0)) # Output: []
 
 # Example with n=1
 print(f"\nGenerated sequence for n=1:")
-print(generate_bit_length_sequence(1)) # Output: [0.0]
+print(generate_bit_count_sequence(1)) # Output: [0.0]
 
 # Example demonstrating error handling
 try:
-    generate_bit_length_sequence(-5)
+    generate_bit_count_sequence(-5)
 except ValueError as e:
     print(f"\nError handling test: {e}")
 
 try:
-    generate_bit_length_sequence(5.5)
+    generate_bit_count_sequence(5.5)
 except ValueError as e:
     print(f"Error handling test: {e}")
 
 # --- Alternative using List Comprehension (more concise) ---
 
-def generate_bit_length_sequence_comp(n):
+def generate_bit_count_sequence_comp(n):
   """
-  Generates a list of n floats using k / k.bit_length() via list comprehension.
+  Generates a list of n floats using k / k.bit_count() via list comprehension.
 
   Handles k=0 as 0.0. Raises ValueError for invalid n.
   """
@@ -81,9 +81,9 @@ def generate_bit_length_sequence_comp(n):
     raise ValueError("Input 'n' must be a non-negative integer.")
 
   # Use a conditional expression within the list comprehension for k=0
-  return [0.0 if k == 0 else k / k.bit_length() for k in range(n)]
+  return [0.0 if k == 0 else k / k.bit_count() for k in range(n)]
 
 print("\n--- Using List Comprehension ---")
-sequence_comp = generate_bit_length_sequence_comp(n_elements)
+sequence_comp = generate_bit_count_sequence_comp(n_elements)
 print(f"Generated sequence for n={n_elements}:")
 print(sequence_comp)
