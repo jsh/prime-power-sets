@@ -1,6 +1,6 @@
 from collections import defaultdict
 import math
-
+import sys
 
 def generate_bit_count_sequence(n):
   """
@@ -45,10 +45,36 @@ def find_exact_float_duplicates_with_indices(seq):
   duplicates_result = [(value, indices) for value, indices in index_map.items() if len(indices) > 1]
   return duplicates_result
 
-# --- Example Usage ---
 
-# Generate a sequence of length 10
-n_elements = 100
-sequence = generate_bit_count_sequence(n_elements)
-result_exact = find_exact_float_duplicates_with_indices(sequence)
-print(f"Exact Duplicates: {result_exact}")
+def get_integer_simple():
+    # sys.argv[0] is the script name
+    # sys.argv[1] is the first argument, sys.argv[2] the second, etc.
+
+    # Check if the expected number of arguments is provided
+    if len(sys.argv) != 2: # Script name + 1 argument = 2 items
+        print(f"Usage: python {sys.argv[0]} <integer>", file=sys.stderr)
+        sys.exit(1) # Exit with an error code
+
+    # Get the argument string
+    argument_str = sys.argv[1]
+
+    # Try to convert the string to an integer
+    try:
+        return int(argument_str)
+    except ValueError:
+        # Handle the case where the argument is not a valid integer
+        print(f"Error: Argument '{argument_str}' is not a valid integer.", file=sys.stderr)
+        sys.exit(1) # Exit with an error code
+    except Exception as e:
+        # Catch other potential unexpected errors
+        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+        sys.exit(1)
+
+def main():
+    n = get_integer_simple()
+    seq = generate_bit_count_sequence(n)
+    dups = find_exact_float_duplicates_with_indices(seq)
+    print(dups)
+    
+if __name__ == "__main__":
+    main()
