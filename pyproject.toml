@@ -1,0 +1,9 @@
+[project]
+name = "powers-of-two"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11.2"
+dependencies = [
+    "pandas>=2.2.3",
+]
