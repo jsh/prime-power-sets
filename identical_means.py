@@ -5,6 +5,62 @@ import itertools
 
 import pandas as pd
 
+
+def decimal_to_binary_string(decimal_num):
+  """Converts a non-negative integer to its base 2 (binary) string representation.
+
+  Args:
+    decimal_num: A non-negative integer.
+
+  Returns:
+    A string containing the binary representation (e.g., "101", "1110").
+    Returns None and prints an error message if the input is not a non-negative
+    integer.
+  """
+  if not isinstance(decimal_num, int):
+    print(f"Error: Input must be an integer. Received type: {type(decimal_num)}")
+    return None
+
+  if decimal_num < 0:
+    print("Error: Input must be a non-negative integer.")
+    return None
+
+  if decimal_num == 0:
+    return "0" # Explicitly handle 0 case
+
+  # bin() returns a string like "0b1101". We slice off the first two characters ("0b").
+  binary_representation = bin(decimal_num)[2:]
+  return binary_representation
+
+
+def base3_to_decimal(base3_string):
+  """Converts a string representation of a base 3 number to its decimal (base 10) equivalent.
+
+  Args:
+    base3_string: A string containing the base 3 number (must only contain
+                  digits '0', '1', or '2').
+
+  Returns:
+    The integer decimal equivalent of the base 3 string.
+    Returns None and prints an error message if the input string is not a
+    valid base 3 number or not a string.
+  """
+  if not isinstance(base3_string, str):
+      print(f"Error: Input must be a string, but received type {type(base3_string)}.")
+      return None
+  try:
+    # The int() function can take a base argument.
+    # int(string, base) converts the string representation in the given base
+    # to a base 10 integer.
+    decimal_value = int(base3_string, 3)
+    return decimal_value
+  except ValueError:
+    # This error occurs if the string contains characters other than '0', '1', '2'
+    # or if the string is empty.
+    print(f"Error: Invalid base 3 string '{base3_string}'. String must only contain '0', '1', or '2' and cannot be empty.")
+    return None
+
+
 def generate_bit_count_sequence(n):
   """
   Generates a list of n floats using k / k.bit_count() via list comprehension.
