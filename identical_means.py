@@ -61,6 +61,11 @@ def base3_to_decimal(base3_string):
     return None
 
 
+def base3_analogue(k):
+    bit_string = decimal_to_binary_string(k)
+    return base3_to_decimal(bit_string)
+
+
 def generate_bit_count_sequence(n):
   """
   Generates a list of n floats using k / k.bit_count() via list comprehension.
@@ -71,7 +76,7 @@ def generate_bit_count_sequence(n):
     raise ValueError("Input 'n' must be a non-negative integer.")
 
   # Use a conditional expression within the list comprehension for k=0
-  return [0.0 if k == 0 else k / k.bit_count() for k in range(n)]
+  return [0.0 if k == 0 else base3_analogue(k) / k.bit_count() for k in range(n)]
 
 def find_exact_float_duplicates_with_indices(seq):
   """
