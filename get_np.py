@@ -3,26 +3,30 @@ import argparse
 import sys
 import math
 
+
 def is_prime(num):
     """Checks if a number is prime."""
     if num < 2:
         return False
     if num == 2:
         return True
-    if num % 2 == 0: # Check if even (and not 2)
+    if num % 2 == 0:  # Check if even (and not 2)
         return False
     # Check odd divisors up to the integer square root of num
-    limit = math.isqrt(num) # Requires Python 3.8+; use int(math.sqrt(num)) for older versions
+    limit = math.isqrt(
+        num
+    )  # Requires Python 3.8+; use int(math.sqrt(num)) for older versions
     for i in range(3, limit + 1, 2):
         if num % i == 0:
             return False
     return True
 
+
 def main():
     """Parses command line arguments for a non-negative integer n and a prime p."""
     parser = argparse.ArgumentParser(
         description="Get a non-negative integer n and a prime number p from the command line.",
-        epilog="Example: python get_np.py 10 7"
+        epilog="Example: python get_np.py 10 7",
     )
 
     # Define the positional arguments
@@ -34,8 +38,8 @@ def main():
     try:
         args = parser.parse_args()
     except SystemExit:
-         # argparse handles printing help/errors if parsing itself fails (e.g., wrong number of args)
-         sys.exit(1) # Exit with a non-zero status indicating failure
+        # argparse handles printing help/errors if parsing itself fails (e.g., wrong number of args)
+        sys.exit(1)  # Exit with a non-zero status indicating failure
 
     # --- Custom Validation ---
 
@@ -57,6 +61,7 @@ def main():
     # You can now use args.n and args.p in the rest of your script
     # Example: result = args.n + args.p
     # print(f"n + p = {result}")
+
 
 if __name__ == "__main__":
     main()
