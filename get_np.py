@@ -1,7 +1,7 @@
 # Save this code in a file, e.g., get_np.py
 import argparse
-import sys
 import math
+import sys
 
 
 def is_prime(num):

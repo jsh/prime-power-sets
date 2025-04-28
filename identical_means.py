@@ -1,10 +1,8 @@
-from collections import defaultdict
 import argparse
+import itertools
 import math
 import sys
-import itertools
-
-import pandas as pd
+from collections import defaultdict
 
 
 def decimal_to_binary_string(decimal_num):

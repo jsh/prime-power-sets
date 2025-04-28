@@ -1,6 +1,3 @@
-import math
-
-
 def generate_bit_count_sequence(n):
     """
     Generates a list of n floating-point numbers based on the formula k / k.bit_count().
@@ -53,11 +50,11 @@ for k, val in enumerate(sequence):
     print(f"{k}: {val:.4f}")
 
 # Example with n=0
-print(f"\nGenerated sequence for n=0:")
+print("\nGenerated sequence for n=0:")
 print(generate_bit_count_sequence(0))  # Output: []
 
 # Example with n=1
-print(f"\nGenerated sequence for n=1:")
+print("\nGenerated sequence for n=1:")
 print(generate_bit_count_sequence(1))  # Output: [0.0]
 
 # Example demonstrating error handling

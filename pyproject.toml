@@ -1,9 +1,9 @@
 [project]
-name = "powers-of-two"
+name = "prime-power_sets"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.11.2"
+requires-python = ">=3.13.3"
 dependencies = [
     "pandas>=2.2.3",
     "pre-commit>=4.2.0",
