@@ -64,6 +64,10 @@ def basep_to_decimal(basep_string, p):
 
 
 def basep_analogue(k, p):
+    if p < 2:
+        raise ValueError("Base p must be at least 2.")
+    if not isinstance(p, int):
+        raise ValueError("Base p must be an integer.")
     bit_string = decimal_to_binary_string(k)
     return basep_to_decimal(bit_string, p)
 

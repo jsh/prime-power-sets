@@ -1,5 +1,5 @@
 [project]
-name = "prime-power_sets"
+name = "prime_power_sets"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -7,4 +7,5 @@ requires-python = ">=3.13.3"
 dependencies = [
     "pandas>=2.2.3",
     "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
 ]
