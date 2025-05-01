@@ -14,3 +14,17 @@ def test_basep_analogue_large_p():
 
 def test_basep_analogue_another():
     assert basep_analogue(10, 3) == 30
+
+import pytest
+
+from identical_means import basep_analogue
+
+
+def test_basep_analogue_invalid_base():
+    with pytest.raises(ValueError, match="Base p must be at least 2."):
+        basep_analogue(5, 1)
+
+
+def test_basep_analogue_non_integer_base():
+    with pytest.raises(ValueError, match="Base p must be an integer."):
+        basep_analogue(5, 2.5)

@@ -5,7 +5,18 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13.3"
 dependencies = [
+    "mutmut>=3.2.3",
     "pandas>=2.2.3",
     "pre-commit>=4.2.0",
     "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
 ]
+
+[tool.mutmut]
+# Specify the path(s) to your source code file(s) relative to the project root.
+# Use "." for the current directory, or list specific files.
+paths_to_mutate = ["identical_means.py"]  # Or ["."] to cover all .py in root
+                                     # Or ["my_program.py", "another_module.py"]
+
+# Command to run your tests from the project root directory.
+runner = "pytest tests/"
