@@ -17,7 +17,7 @@ def decimal_to_binary_string(decimal_num):
       integer.
     """
     if not isinstance(decimal_num, int):
-        print(f"Error: Input must be an integer. Received type: {type(decimal_num)}")
+        print(f"Error: Input must be an integer.")
         return None
 
     if decimal_num < 0:
