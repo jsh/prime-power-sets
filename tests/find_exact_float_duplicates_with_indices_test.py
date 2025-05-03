@@ -65,5 +65,5 @@ def test_find_exact_float_duplicates_with_indices_inf():
     assert result[0][1] == [0, 2]
 
 def test_find_exact_float_duplicates_with_indices_type_error():
-    with pytest.raises(TypeError):
+    with pytest.raises(TypeError, match=r"^Input must be a list.$"):
         find_exact_float_duplicates_with_indices("not a list")
