@@ -45,7 +45,7 @@ def basep_to_decimal(basep_string, p):
       valid base p number or not a string.
     """
     if not isinstance(basep_string, str):
-        print(f"Error: Input must be a string, but received type {type(basep_string)}.")
+        print(f"Error: Input must be a string.")
         return None
     try:
         # The int() function can take a base argument.
