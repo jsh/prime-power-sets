@@ -2,18 +2,28 @@ import pytest
 from identical_means import parse_args
 import argparse
 
-def test_parse_args_help(monkeypatch, capsys):
+def test_parse_args_helpmessage(monkeypatch, capsys):
     monkeypatch.setattr('sys.argv', ['script_name', '--help'])
     with pytest.raises(SystemExit):
         parse_args()
     captured = capsys.readouterr()
     assert "Get a non-negative integer n and a prime number p from the command line" in captured.out
+    assert "Example: python get_np.py 10 7" in captured.out
+    assert "A non-negative integer." in captured.out
+    assert "A prime number." in captured.out
 
 
 def test_parse_args_valid_input(monkeypatch):
     monkeypatch.setattr('sys.argv', ['script_name', '10', '7'])
     n, p = parse_args()
     assert n == 10
+    assert p == 7
+
+
+def test_parse_args_zero_n(monkeypatch):
+    monkeypatch.setattr('sys.argv', ['script_name', '0', '7'])
+    n, p = parse_args()
+    assert n == 0
     assert p == 7
 
 
