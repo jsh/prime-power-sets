@@ -4,6 +4,8 @@ import math
 import sys
 from collections import defaultdict
 
+from sympy import isprime
+
 
 def decimal_to_binary_string(decimal_num):
     """Converts a non-negative integer to its base 2 (binary) string representation.
@@ -149,22 +151,22 @@ def find_disjoint_pairs(s: set[int]) -> list[tuple[int, int]]:
     return disjoint_pairs
 
 
-def is_prime(num):
-    """Checks if a number is prime."""
-    if num < 2:
-        return False
-    if num == 2:
-        return True
-    if num % 2 == 0:  # Check if even (and not 2)
-        return False
-    # Check odd divisors up to the integer square root of num
-    limit = math.isqrt(
-        num
-    )  # Requires Python 3.8+; use int(math.sqrt(num)) for older versions
-    for i in range(3, limit + 1, 2):
-        if num % i == 0:
-            return False
-    return True
+# def is_prime(num):
+#     """Checks if a number is prime."""
+#     if num < 2:
+#         return False
+#     if num == 2:
+#         return True
+#     if num % 2 == 0:  # Check if even (and not 2)
+#         return False
+#     # Check odd divisors up to the integer square root of num
+#     limit = math.isqrt(
+#         num
+#     )  # Requires Python 3.8+; use int(math.sqrt(num)) for older versions
+#     for i in range(3, limit + 1, 2):
+#         if num % i == 0:
+#             return False
+#     return True
 
 
 def parse_args():
@@ -194,7 +196,7 @@ def parse_args():
         parser.error(f"Argument n: Must be a non-negative integer. Received: {args.n}")
 
     # Validate p: Must be prime
-    if not is_prime(args.p):
+    if not isprime(args.p):
         parser.error(f"Argument p: Must be a prime number. {args.p} is not prime.")
 
     # --- Success ---
