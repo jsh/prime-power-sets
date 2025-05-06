@@ -153,62 +153,52 @@ def find_disjoint_pairs(s: set[int]) -> list[tuple[int, int]]:
     return disjoint_pairs
 
 
-# def is_prime(num):
-#     """Checks if a number is prime."""
-#     if num < 2:
-#         return False
-#     if num == 2:
-#         return True
-#     if num % 2 == 0:  # Check if even (and not 2)
-#         return False
-#     # Check odd divisors up to the integer square root of num
-#     limit = math.isqrt(
-#         num
-#     )  # Requires Python 3.8+; use int(math.sqrt(num)) for older versions
-#     for i in range(3, limit + 1, 2):
-#         if num % i == 0:
-#             return False
-#     return True
-
-
-def parse_args():
-    """Parses command line arguments for a non-negative integer n and a prime p."""
+def create_parser():
+    """Creates a parser for a non-negative size s and a prime p."""
     parser = argparse.ArgumentParser(
-        description="Get a non-negative integer n and a prime number p from the command line.",
-        epilog="Example: python get_np.py 10 7",
+        description="Get a non-negative integer s and a prime number p from the command line.",
+        epilog=f"Example: python {sys.argv[0]} -s 10 -p 7",
     )
 
     # Define the positional arguments
     # argparse handles the basic conversion to int and errors if it fails
-    parser.add_argument("n", type=int, help="A non-negative integer.")
-    parser.add_argument("p", type=int, help="A prime number.")
+    parser.add_argument("-p", "--prime", type=int, help="A prime number.", default=2)
+    parser.add_argument(
+        "-s", "--size", type=int, help="A non-negative integer.", default=0
+    )
 
+    return parser
+
+
+def get_and_validate_args():
+    """Parses command line arguments and validates them.
+    Returns:
+      A tuple (s, p) where s is a non-negative integer and p is a prime number.
+    Raises:
+      SystemExit: If the arguments are invalid or if help is requested.
+    """
+    # Create the argument parser
+    parser = create_parser()
     # Parse the arguments from the command line
-    try:
-        args = parser.parse_args()
-    except SystemExit:
-        # argparse handles printing help/errors if parsing itself fails (e.g., wrong number of args)
-        sys.exit(1)  # Exit with a non-zero status indicating failure
+    args = parser.parse_args()
 
     # --- Custom Validation ---
 
-    # Validate n: Must be non-negative
-    if args.n < 0:
-        # parser.error prints the message and exits gracefully
-        parser.error(f"Argument n: Must be a non-negative integer. Received: {args.n}")
+    # Validate s: Must be non-negative
+    if args.size < 0:
+        parser.error(f"Size must be a non-negative integer. Received: {args.size}")
 
     # Validate p: Must be prime
-    if not isprime(args.p):
-        parser.error(f"Argument p: Must be a prime number. {args.p} is not prime.")
+    if not isprime(args.prime):
+        parser.error(f"Prime must be a prime number. Received: {args.prime}")
 
     # --- Success ---
-    # If we reach here, the arguments are valid
-    return (args.n, args.p)
+    return args.size, args.prime
 
 
 def main():
-    n, p = parse_args()
-    seq = generate_bit_count_sequence(n, p)
+    size, prime = get_and_validate_args()
+    seq = generate_bit_count_sequence(size, prime)
     dups = find_exact_float_duplicates_with_indices(seq)
     for dup in dups:
         if find_disjoint_pairs(dup[1]):
