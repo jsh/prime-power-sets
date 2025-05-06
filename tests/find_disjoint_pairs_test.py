@@ -1,5 +1,4 @@
-import pytest
-from identical_means import are_disjoint, find_disjoint_pairs
+from identical_means import find_disjoint_pairs
 
 
 def test_find_disjoint_pairs_empty_set():

@@ -1,4 +1,7 @@
+import pytest
+
 from identical_means import basep_analogue
+
 
 def test_basep_analogue_basic():
     assert basep_analogue(5, 3) == 10
@@ -14,10 +17,6 @@ def test_basep_analogue_large_p():
 
 def test_basep_analogue_another():
     assert basep_analogue(10, 3) == 30
-
-import pytest
-
-from identical_means import basep_analogue
 
 
 def test_basep_analogue_invalid_base():

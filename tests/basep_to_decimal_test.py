@@ -1,5 +1,5 @@
-import pytest
 from identical_means import basep_to_decimal
+
 
 def test_basep_to_decimal_valid_base3():
     assert basep_to_decimal("120", 3) == 15

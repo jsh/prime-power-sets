@@ -21,3 +21,15 @@ paths_to_mutate = ["identical_means.py"]  # Or ["."] to cover all .py in root
 
 # Command to run your tests from the project root directory.
 runner = "pytest tests/"
+
+[tool.pytest.ini_options]
+# Tell pytest to only search for tests in the 'tests' directory (and maybe 'src')
+testpaths = ["tests"]
+
+[tool.coverage.run]
+omit = [
+    "tests/*"
+]
+
+# Alternatively, if you want to specify what to include:
+# source = ["your_project_name"]

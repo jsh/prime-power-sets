@@ -1,5 +1,7 @@
 import pytest
+
 from identical_means import generate_bit_count_sequence
+
 
 def test_generate_bit_count_sequence_valid_input():
     result = generate_bit_count_sequence(5, 2)
@@ -20,9 +22,34 @@ def test_generate_bit_count_sequence_small_values():
     assert all(isinstance(x, float) for x in result)
 
 
-def test_generate_bit_count_sequence_invalid_n():
+def test_generate_bit_count_sequence_negative_n():
     with pytest.raises(ValueError):
         generate_bit_count_sequence(-1, 5)
+
+
+def test_generate_bit_count_sequence_invalid_n_type():
+    with pytest.raises(ValueError):
+        generate_bit_count_sequence("invalid", 5)
+
+
+def test_generate_bit_count_sequence_None_n():
+    with pytest.raises(ValueError):
+        generate_bit_count_sequence(None, 5)
+
+
+def test_generate_bit_count_sequence_negative_p():
+    with pytest.raises(ValueError):
+        generate_bit_count_sequence(10, -1)
+
+
+def test_generate_bit_count_sequence_invalid_p_type():
+    with pytest.raises(ValueError):
+        generate_bit_count_sequence(10, "invalid")
+
+
+def test_generate_bit_count_sequence_None_p():
+    with pytest.raises(ValueError):
+        generate_bit_count_sequence(10, None)
 
 
 def test_generate_bit_count_sequence_large_n():

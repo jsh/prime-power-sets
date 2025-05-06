@@ -1,6 +1,5 @@
 import argparse
 import itertools
-import math
 import sys
 from collections import defaultdict
 
@@ -19,7 +18,7 @@ def decimal_to_binary_string(decimal_num):
       integer.
     """
     if not isinstance(decimal_num, int):
-        print(f"Error: Input must be an integer.")
+        print("Error: Input must be an integer.")
         return None
 
     if decimal_num < 0:
@@ -47,7 +46,7 @@ def basep_to_decimal(basep_string, p):
       valid base p number or not a string.
     """
     if not isinstance(basep_string, str):
-        print(f"Error: Input must be a string.")
+        print("Error: Input must be a string.")
         return None
     try:
         # The int() function can take a base argument.
@@ -82,6 +81,9 @@ def generate_bit_count_sequence(n, p):
     """
     if not isinstance(n, int) or n < 0:
         raise ValueError("Input 'n' must be a non-negative integer.")
+
+    if not isinstance(p, int) or p < 0:
+        raise ValueError("Input 'p' must be a non-negative integer.")
 
     # Use a conditional expression within the list comprehension for k=0
     return [0.0 if k == 0 else basep_analogue(k, p) / k.bit_count() for k in range(n)]
@@ -213,5 +215,5 @@ def main():
             print(dup)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()

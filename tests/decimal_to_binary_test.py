@@ -1,5 +1,5 @@
-import pytest
 from identical_means import decimal_to_binary_string
+
 
 def test_decimal_to_binary_string_positive():
     assert decimal_to_binary_string(10) == "1010"
