@@ -1,5 +1,5 @@
-import pytest
 import argparse
+
 from identical_means import create_parser
 
 
