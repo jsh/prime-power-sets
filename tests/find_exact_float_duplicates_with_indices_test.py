@@ -33,11 +33,8 @@ def test_find_exact_float_duplicates_with_indices_all_same():
 
 
 def test_find_exact_float_duplicates_with_indices_mixed_types():
-    # The function is supposed to handle non-float values gracefully.
-    result = find_exact_float_duplicates_with_indices([1.0, 2, 1.0, "test", 3.0, 1.0])
-    assert len(result) == 1
-    assert result[0][0] == 1.0
-    assert result[0][1] == [0, 2, 5]
+    with pytest.raises(ValueError, match=r"^Non-float value 2 encountered at index 1. Cannot proceed.$"):
+        find_exact_float_duplicates_with_indices([1.0, 2, 1.0, "test", 3.0, 1.0])
 
 
 def test_find_exact_float_duplicates_with_indices_large_floats():

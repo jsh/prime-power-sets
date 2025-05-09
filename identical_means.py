@@ -2,11 +2,13 @@ import argparse
 import itertools
 import sys
 from collections import defaultdict
+from functools import lru_cache
+from typing import List, Tuple, Set
 
 from sympy import isprime
 
 
-def decimal_to_binary_string(decimal_num):
+def decimal_to_binary_string(decimal_num: int) -> str | None:
     """Converts a non-negative integer to its base 2 (binary) string representation.
 
     Args:
@@ -33,7 +35,7 @@ def decimal_to_binary_string(decimal_num):
     return binary_representation
 
 
-def basep_to_decimal(basep_string, p):
+def basep_to_decimal(basep_string: str, p: int) -> int | None:
     """Converts a string representation of a base p number to its decimal (base 10) equivalent.
 
     Args:
@@ -53,7 +55,6 @@ def basep_to_decimal(basep_string, p):
         # int(string, base) converts the string representation in the given base
         # to a base 10 integer.
         decimal_value = int(basep_string, p)
-        return decimal_value
     except ValueError:
         # This error occurs if the string contains characters
         # other than '0', '1', '2', ..., 'p-1'
@@ -62,18 +63,29 @@ def basep_to_decimal(basep_string, p):
             f"Error: Invalid base p string '{basep_string}'. String must only contain '0', '1', '2', ...', 'p-1', and cannot be empty."
         )
         return None
+    return decimal_value
 
 
-def basep_analogue(k, p):
+@lru_cache(maxsize=None)
+def basep_analogue(k: int, p: int) -> int:
+    """
+    Computes a value based on the binary representation of k, interpreted as a base-p number.
+    For example, if k is 5 (binary 101) and p is 3, it interprets "101" as a base-3 number.
+    """
     if p < 2:
         raise ValueError("Base p must be at least 2.")
     if not isinstance(p, int):
         raise ValueError("Base p must be an integer.")
     bit_string = decimal_to_binary_string(k)
-    return basep_to_decimal(bit_string, p)
+    if bit_string is None:
+        raise ValueError(f"Could not convert {k} to binary.")
+    decimal_value = basep_to_decimal(bit_string, p)
+    if decimal_value is None:
+        raise ValueError(f"Could not convert {bit_string} to base-{p} decimal.")
+    return decimal_value
 
 
-def generate_bit_count_sequence(n, p):
+def generate_bit_count_sequence(n: int, p: int) -> List[float]:
     """
     Generates a list of n floats using k / k.bit_count() via list comprehension.
 
@@ -81,15 +93,15 @@ def generate_bit_count_sequence(n, p):
     """
     if not isinstance(n, int) or n < 0:
         raise ValueError("Input 'n' must be a non-negative integer.")
-
     if not isinstance(p, int) or p < 0:
         raise ValueError("Input 'p' must be a non-negative integer.")
-
     # Use a conditional expression within the list comprehension for k=0
     return [0.0 if k == 0 else basep_analogue(k, p) / k.bit_count() for k in range(n)]
 
 
-def find_exact_float_duplicates_with_indices(seq):
+def find_exact_float_duplicates_with_indices(
+    seq: List[float],
+) -> List[Tuple[float, List[int]]]:
     """
     Finds EXACT duplicate float elements in a list and returns them with indices.
     Works correctly if duplicates have identical float representations.
@@ -102,22 +114,14 @@ def find_exact_float_duplicates_with_indices(seq):
     """
     if not isinstance(seq, list):
         raise TypeError("Input must be a list.")
-    # Basic check if elements are floats (can be enhanced)
-    # if not all(isinstance(item, float) for item in seq):
-    #   raise ValueError("List must contain only floats for this scenario.")
-
     index_map = defaultdict(list)
     for index, value in enumerate(seq):
-        # Check if value is float before using - crucial if list might be mixed despite assumption
         if isinstance(value, float):
             index_map[value].append(index)
         else:
-            # Handle non-float case if the assumption might be violated
-            print(
-                f"Warning: Non-float value {value} encountered at index {index}. Skipping."
+            raise ValueError(
+                f"Non-float value {value} encountered at index {index}. Cannot proceed."
             )
-            # Or raise ValueError("List contains non-float elements.")
-
     duplicates_result = [
         (value, indices) for value, indices in index_map.items() if len(indices) > 1
     ]
@@ -132,7 +136,7 @@ def are_disjoint(num1: int, num2: int) -> bool:
     return (num1 & num2) == 0
 
 
-def find_disjoint_pairs(s: set[int]) -> list[tuple[int, int]]:
+def find_disjoint_pairs(s: Set[int]) -> List[Tuple[int, int]]:
     """
     Finds all pairs of disjoint integers within a given set.
 
@@ -153,7 +157,7 @@ def find_disjoint_pairs(s: set[int]) -> list[tuple[int, int]]:
     return disjoint_pairs
 
 
-def create_parser():
+def create_parser() -> argparse.ArgumentParser:
     """Creates a parser for a non-negative size s and a prime p."""
     parser = argparse.ArgumentParser(
         description="Get a non-negative integer s and a prime number p from the command line.",
@@ -166,14 +170,13 @@ def create_parser():
     parser.add_argument(
         "-s", "--size", type=int, help="A non-negative integer.", default=0
     )
-
     return parser
 
 
-def get_and_validate_args():
+def get_and_validate_args() -> Tuple[int, int]:
     """Parses command line arguments and validates them.
     Returns:
-      A tuple (s, p) where s is a non-negative integer and p is a prime number.
+      A tuple (size, prime) where size is a non-negative integer and prime is a prime number.
     Raises:
       SystemExit: If the arguments are invalid or if help is requested.
     """
@@ -181,17 +184,13 @@ def get_and_validate_args():
     parser = create_parser()
     # Parse the arguments from the command line
     args = parser.parse_args()
-
     # --- Custom Validation ---
-
     # Validate s: Must be non-negative
     if args.size < 0:
         parser.error(f"Size must be a non-negative integer. Received: {args.size}")
-
     # Validate p: Must be prime
     if not isprime(args.prime):
         parser.error(f"Prime must be a prime number. Received: {args.prime}")
-
     # --- Success ---
     return args.size, args.prime
 
@@ -201,7 +200,7 @@ def main():
     seq = generate_bit_count_sequence(size, prime)
     dups = find_exact_float_duplicates_with_indices(seq)
     for dup in dups:
-        if find_disjoint_pairs(dup[1]):
+        if find_disjoint_pairs(set(dup[1])):
             print(dup)
 
 
