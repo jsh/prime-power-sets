@@ -3,12 +3,12 @@ import itertools
 import sys
 from collections import defaultdict
 from functools import lru_cache
-from typing import List, Tuple, Set
+from typing import List, Tuple, Set, Optional
 
 from sympy import isprime
 
 
-def decimal_to_binary_string(decimal_num: int) -> str | None:
+def decimal_to_binary_string(decimal_num: int) -> str:
     """Converts a non-negative integer to its base 2 (binary) string representation.
 
     Args:
@@ -16,26 +16,21 @@ def decimal_to_binary_string(decimal_num: int) -> str | None:
 
     Returns:
       A string containing the binary representation (e.g., "101", "1110").
-      Returns None and prints an error message if the input is not a non-negative
-      integer.
+
+      Raises:
+        ValueError: If input is not a non-negative integer.
     """
     if not isinstance(decimal_num, int):
-        print("Error: Input must be an integer.")
-        return None
-
+        raise ValueError("Input must be an integer.")
     if decimal_num < 0:
-        print("Error: Input must be a non-negative integer.")
-        return None
-
+        raise ValueError("Input must be a non-negative integer.")
     if decimal_num == 0:
         return "0"  # Explicitly handle 0 case
-
     # bin() returns a string like "0b1101". We slice off the first two characters ("0b").
-    binary_representation = bin(decimal_num)[2:]
-    return binary_representation
+    return bin(decimal_num)[2:]
+    
 
-
-def basep_to_decimal(basep_string: str, p: int) -> int | None:
+def basep_to_decimal(basep_string: str, p: int) -> int:
     """Converts a string representation of a base p number to its decimal (base 10) equivalent.
 
     Args:
@@ -44,29 +39,28 @@ def basep_to_decimal(basep_string: str, p: int) -> int | None:
 
     Returns:
       The integer decimal equivalent of the base p string.
-      Returns None and prints an error message if the input string is not a
-      valid base p number or not a string.
+      
+    Raises:
+        ValueError: If input is invalid or empty.
+        TypeError: If input is not a string.   
     """
     if not isinstance(basep_string, str):
-        print("Error: Input must be a string.")
-        return None
+        raise TypeError("Input must be a string.")        
     try:
         # The int() function can take a base argument.
         # int(string, base) converts the string representation in the given base
         # to a base 10 integer.
-        decimal_value = int(basep_string, p)
+        return int(basep_string, p)
     except ValueError:
         # This error occurs if the string contains characters
         # other than '0', '1', '2', ..., 'p-1'
         # or if the string is empty.
-        print(
-            f"Error: Invalid base p string '{basep_string}'. String must only contain '0', '1', '2', ...', 'p-1', and cannot be empty."
+        raise ValueError(
+            f"Invalid base {p} string '{basep_string}'. Must contain only digits 0-{p-1}."
         )
-        return None
-    return decimal_value
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=1024)
 def basep_analogue(k: int, p: int) -> int:
     """
     Computes a value based on the binary representation of k, interpreted as a base-p number.
@@ -116,16 +110,11 @@ def find_exact_float_duplicates_with_indices(
         raise TypeError("Input must be a list.")
     index_map = defaultdict(list)
     for index, value in enumerate(seq):
-        if isinstance(value, float):
-            index_map[value].append(index)
-        else:
-            raise ValueError(
-                f"Non-float value {value} encountered at index {index}. Cannot proceed."
-            )
-    duplicates_result = [
-        (value, indices) for value, indices in index_map.items() if len(indices) > 1
-    ]
-    return duplicates_result
+        if not isinstance(value, float):
+            raise TypeError(f"All values must be float. Found {type(value)} at index {index}")
+        index_map[value].append(index)
+
+    return [(value, indices) for value, indices in index_map.items() if len(indices) > 1]
 
 
 def are_disjoint(num1: int, num2: int) -> bool:

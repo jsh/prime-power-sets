@@ -33,7 +33,10 @@ def test_find_exact_float_duplicates_with_indices_all_same():
 
 
 def test_find_exact_float_duplicates_with_indices_mixed_types():
-    with pytest.raises(ValueError, match=r"^Non-float value 2 encountered at index 1. Cannot proceed.$"):
+    # This test is expected to raise a TypeError because of the presence of non-float values
+    # in the input list.
+    # The error message should indicate the first non-float value encountered.
+    with pytest.raises(TypeError, match=r"^All values must be float. Found <class 'int'> at index 1$"):
         find_exact_float_duplicates_with_indices([1.0, 2, 1.0, "test", 3.0, 1.0])
 
 
