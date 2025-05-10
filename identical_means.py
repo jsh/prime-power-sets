@@ -3,7 +3,7 @@ import itertools
 import sys
 from collections import defaultdict
 from functools import lru_cache
-from typing import List, Tuple, Set, Optional
+from typing import List, Set, Tuple
 
 from sympy import isprime
 
@@ -28,7 +28,7 @@ def decimal_to_binary_string(decimal_num: int) -> str:
         return "0"  # Explicitly handle 0 case
     # bin() returns a string like "0b1101". We slice off the first two characters ("0b").
     return bin(decimal_num)[2:]
-    
+
 
 def basep_to_decimal(basep_string: str, p: int) -> int:
     """Converts a string representation of a base p number to its decimal (base 10) equivalent.
@@ -39,13 +39,13 @@ def basep_to_decimal(basep_string: str, p: int) -> int:
 
     Returns:
       The integer decimal equivalent of the base p string.
-      
+
     Raises:
         ValueError: If input is invalid or empty.
-        TypeError: If input is not a string.   
+        TypeError: If input is not a string.
     """
     if not isinstance(basep_string, str):
-        raise TypeError("Input must be a string.")        
+        raise TypeError("Input must be a string.")
     try:
         # The int() function can take a base argument.
         # int(string, base) converts the string representation in the given base
@@ -56,7 +56,7 @@ def basep_to_decimal(basep_string: str, p: int) -> int:
         # other than '0', '1', '2', ..., 'p-1'
         # or if the string is empty.
         raise ValueError(
-            f"Invalid base {p} string '{basep_string}'. Must contain only digits 0-{p-1}."
+            f"Invalid base {p} string '{basep_string}'. Must contain only digits 0-{p - 1}."
         )
 
 
@@ -71,11 +71,7 @@ def basep_analogue(k: int, p: int) -> int:
     if not isinstance(p, int):
         raise ValueError("Base p must be an integer.")
     bit_string = decimal_to_binary_string(k)
-    if bit_string is None:
-        raise ValueError(f"Could not convert {k} to binary.")
     decimal_value = basep_to_decimal(bit_string, p)
-    if decimal_value is None:
-        raise ValueError(f"Could not convert {bit_string} to base-{p} decimal.")
     return decimal_value
 
 
@@ -111,10 +107,14 @@ def find_exact_float_duplicates_with_indices(
     index_map = defaultdict(list)
     for index, value in enumerate(seq):
         if not isinstance(value, float):
-            raise TypeError(f"All values must be float. Found {type(value)} at index {index}")
+            raise TypeError(
+                f"All values must be float. Found {type(value)} at index {index}"
+            )
         index_map[value].append(index)
 
-    return [(value, indices) for value, indices in index_map.items() if len(indices) > 1]
+    return [
+        (value, indices) for value, indices in index_map.items() if len(indices) > 1
+    ]
 
 
 def are_disjoint(num1: int, num2: int) -> bool:

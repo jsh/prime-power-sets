@@ -1,6 +1,6 @@
-from identical_means import decimal_to_binary_string
-
 import pytest
+
+from identical_means import decimal_to_binary_string
 
 
 def test_decimal_to_binary_string_positive():
@@ -16,8 +16,8 @@ def test_decimal_to_binary_string_zero():
 def test_decimal_to_binary_string_negative():
     with pytest.raises(ValueError, match=r"^Input must be a non-negative integer.$"):
         decimal_to_binary_string(-5)
-        
-        
+
+
 def test_decimal_to_binary_string_invalid_input():
     with pytest.raises(ValueError, match=r"^Input must be an integer.$"):
         decimal_to_binary_string("abc")
