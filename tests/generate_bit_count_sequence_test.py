@@ -55,9 +55,3 @@ def test_generate_bit_count_sequence_None_p():
 def test_generate_bit_count_sequence_large_n():
     result = generate_bit_count_sequence(10, 2)
     assert len(result) == 10
-
-
-## TODO
-# def test_generate_bit_count_sequence_p_equals_one():
-#     result = generate_bit_count_sequence(5, 1)
-#     assert len(result) == 5
