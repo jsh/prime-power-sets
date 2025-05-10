@@ -20,10 +20,10 @@ def test_basep_analogue_another():
 
 
 def test_basep_analogue_invalid_base():
-    with pytest.raises(ValueError, match=r"^Base p must be at least 2.$"):
+    with pytest.raises(ValueError, match=r"^Base 'p' must be at least 2.$"):
         basep_analogue(5, 1)
 
 
 def test_basep_analogue_non_integer_base():
-    with pytest.raises(ValueError, match=r"^Base p must be an integer.$"):
+    with pytest.raises(ValueError, match=r"^Base 'p' must be an integer.$"):
         basep_analogue(5, 2.5)

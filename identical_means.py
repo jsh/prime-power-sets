@@ -67,9 +67,9 @@ def basep_analogue(k: int, p: int) -> int:
     For example, if k is 5 (binary 101) and p is 3, it interprets "101" as a base-3 number.
     """
     if p < 2:
-        raise ValueError("Base p must be at least 2.")
+        raise ValueError("Base 'p' must be at least 2.")
     if not isinstance(p, int):
-        raise ValueError("Base p must be an integer.")
+        raise ValueError("Base 'p' must be an integer.")
     bit_string = decimal_to_binary_string(k)
     decimal_value = basep_to_decimal(bit_string, p)
     return decimal_value
