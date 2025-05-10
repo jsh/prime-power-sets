@@ -23,32 +23,32 @@ def test_generate_bit_count_sequence_small_values():
 
 
 def test_generate_bit_count_sequence_negative_n():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"^Input 'n' must be a non-negative integer.$"):
         generate_bit_count_sequence(-1, 5)
 
 
 def test_generate_bit_count_sequence_invalid_n_type():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"^Input 'n' must be a non-negative integer.$"):
         generate_bit_count_sequence("invalid", 5)
 
 
 def test_generate_bit_count_sequence_None_n():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"^Input 'n' must be a non-negative integer.$"):
         generate_bit_count_sequence(None, 5)
 
 
 def test_generate_bit_count_sequence_negative_p():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"^Input 'p' must be a non-negative integer.$"):
         generate_bit_count_sequence(10, -1)
 
 
 def test_generate_bit_count_sequence_invalid_p_type():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"^Input 'p' must be a non-negative integer.$"):
         generate_bit_count_sequence(10, "invalid")
 
 
 def test_generate_bit_count_sequence_None_p():
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match=r"^Input 'p' must be a non-negative integer.$"):
         generate_bit_count_sequence(10, None)
 
 
