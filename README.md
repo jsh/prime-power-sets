@@ -80,7 +80,7 @@ In this case, $\mu($ `{` $1, 25$ `}`$)=26/2=13$
 
 ## A Partial Answer
 
-For $p=2$, duplicates begin to appear around $n=9$ .
+For $p=2$, duplicates begin to appear at $n=14$ .
 For odd primes, $p \gt 2$, I haven't yet found duplicates.
 
 ## Conjectures

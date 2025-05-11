@@ -149,23 +149,23 @@ def find_disjoint_pairs(s: Set[int]) -> List[Tuple[int, int]]:
 def create_parser() -> argparse.ArgumentParser:
     """Creates a parser for a non-negative size s and a prime p."""
     parser = argparse.ArgumentParser(
-        description="Get a non-negative integer s and a prime number p from the command line.",
-        epilog=f"Example: python {sys.argv[0]} -s 10 -p 7",
+        description="Get a non-negative exponent-limit, 'n'  and a prime number 'p' from the command line.",
+        epilog=f"Example: python {sys.argv[0]} -n 10 -p 7",
     )
 
     # Define the positional arguments
     # argparse handles the basic conversion to int and errors if it fails
     parser.add_argument("-p", "--prime", type=int, help="A prime number.", default=2)
     parser.add_argument(
-        "-s", "--size", type=int, help="A non-negative integer.", default=0
+        "-n", "--exponent-limit", type=int, help="A non-negative integer.", default=0
     )
     return parser
 
 
 def get_and_validate_args() -> Tuple[int, int]:
-    """Parses command line arguments and validates them.
+    """Parses command line arguments and validats them.
     Returns:
-      A tuple (size, prime) where size is a non-negative integer and prime is a prime number.
+      A tuple (exponent-limit, prime) where size is a non-negative integer and prime is a prime number.
     Raises:
       SystemExit: If the arguments are invalid or if help is requested.
     """
@@ -174,18 +174,19 @@ def get_and_validate_args() -> Tuple[int, int]:
     # Parse the arguments from the command line
     args = parser.parse_args()
     # --- Custom Validation ---
-    # Validate s: Must be non-negative
-    if args.size < 0:
-        parser.error(f"Size must be a non-negative integer. Received: {args.size}")
+    # Validate exponent-limit: Must be non-negative
+    if args.exponent_limit < 0:
+        parser.error(f"Exponent-limit must be a non-negative integer. Received: {args.exponent_limit}")
     # Validate p: Must be prime
     if not isprime(args.prime):
         parser.error(f"Prime must be a prime number. Received: {args.prime}")
     # --- Success ---
-    return args.size, args.prime
+    return args.exponent_limit, args.prime
 
 
 def main():
-    size, prime = get_and_validate_args()
+    lim, prime = get_and_validate_args()
+    size = prime**lim
     seq = generate_bit_count_sequence(size, prime)
     dups = find_exact_float_duplicates_with_indices(seq)
     for dup in dups:
