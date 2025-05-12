@@ -81,10 +81,10 @@ def generate_bit_count_sequence(n: int, p: int) -> List[float]:
 
     Handles k=0 as 0.0. Raises ValueError for invalid n.
     """
-    if not isinstance(n, int) or n < 0:
+    if not (isinstance(n, int) and n >= 0):
         raise ValueError("Input 'n' must be a non-negative integer.")
-    if not isinstance(p, int) or p < 0:
-        raise ValueError("Input 'p' must be a non-negative integer.")
+    if not (isinstance(p, int) and isprime(p)):
+        raise ValueError("Input 'p' must be a prime.")
     # Use a conditional expression within the list comprehension for k=0
     return [0.0 if k == 0 else basep_analogue(k, p) / k.bit_count() for k in range(n)]
 

@@ -44,23 +44,17 @@ def test_generate_bit_count_sequence_None_n():
 
 
 def test_generate_bit_count_sequence_negative_p():
-    with pytest.raises(
-        ValueError, match=r"^Input 'p' must be a non-negative integer.$"
-    ):
+    with pytest.raises(ValueError, match=r"^Input 'p' must be a prime.$"):
         generate_bit_count_sequence(10, -1)
 
 
 def test_generate_bit_count_sequence_invalid_p_type():
-    with pytest.raises(
-        ValueError, match=r"^Input 'p' must be a non-negative integer.$"
-    ):
+    with pytest.raises(ValueError, match=r"^Input 'p' must be a prime.$"):
         generate_bit_count_sequence(10, "invalid")
 
 
 def test_generate_bit_count_sequence_None_p():
-    with pytest.raises(
-        ValueError, match=r"^Input 'p' must be a non-negative integer.$"
-    ):
+    with pytest.raises(ValueError, match=r"^Input 'p' must be a prime.$"):
         generate_bit_count_sequence(10, None)
 
 
