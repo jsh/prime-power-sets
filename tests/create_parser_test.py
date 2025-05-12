@@ -76,6 +76,7 @@ def test_prime_help_message():
     parser = create_parser()
     help_text = parser.format_help()
     assert "-p PRIME" in help_text
+    assert " A prime number." in help_text
 
 
 def test_exponent_limit_help_message():
@@ -83,3 +84,4 @@ def test_exponent_limit_help_message():
     parser = create_parser()
     help_text = parser.format_help()
     assert "-n EXPONENT_LIMIT" in help_text
+    assert " A non-negative integer." in help_text
