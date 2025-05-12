@@ -2,6 +2,7 @@ import argparse
 import sys
 
 from identical_means import create_parser
+import pytest
 
 
 def test_create_parser_returns_argparse_parser():
@@ -55,3 +56,24 @@ def test_parser_epilog():
     assert parser.epilog is not None
     assert isinstance(parser.epilog, str)
     assert parser.epilog == f"Example: python {sys.argv[0]} -n 10 -p 7"
+
+
+def test_parser_help_message():
+    """Test that the parser provides a help message."""
+    parser = create_parser()
+    with pytest.raises(SystemExit) as pytest_wrapped_e:
+        parser.parse_args(["-h"])
+    assert pytest_wrapped_e.type == SystemExit
+    assert pytest_wrapped_e.value.code == 0
+
+def test_prime_help_message():
+    """Test that the prime argument has a help message."""
+    parser = create_parser()
+    help_text = parser.format_help()
+    assert "-p PRIME" in help_text
+
+def test_exponent_limit_help_message():
+    """Test that the exponent_limit argument has a help message."""
+    parser = create_parser()
+    help_text = parser.format_help()
+    assert "-n EXPONENT_LIMIT" in help_text
