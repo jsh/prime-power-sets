@@ -27,7 +27,7 @@ def test_main_with_duplicates_no_disjoint(capsys):
 
 
 def test_main_with_output(capsys):
-    with patch("identical_means.get_and_validate_args", return_value=(10000, 2)):
+    with patch("identical_means.get_and_validate_args", return_value=(14, 2)):
         main()
         captured = capsys.readouterr()
-        assert captured.out == "(1259.0, [7554, 8813])\n"
+        assert captured.out == "(1259.0, [7554, 8813, 16367])\n"
