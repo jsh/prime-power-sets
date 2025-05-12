@@ -1,8 +1,9 @@
 import argparse
 import sys
 
-from identical_means import create_parser
 import pytest
+
+from identical_means import create_parser
 
 
 def test_create_parser_returns_argparse_parser():
@@ -35,19 +36,22 @@ def test_parser_prime_argument():
     assert args.exponent_limit == 0
 
 
-
 def test_parser_size_argument():
     """Test that the parser correctly parses the size argument by itself."""
     parser = create_parser()
     args = parser.parse_args(["-n", "15"])
     assert args.exponent_limit == 15
-    
+
+
 def test_parser_description():
     """Test that the parser has the correct description."""
     parser = create_parser()
     assert parser.description is not None
     assert isinstance(parser.description, str)
-    assert parser.description == "Get a non-negative exponent-limit, 'n'  and a prime number 'p' from the command line."
+    assert (
+        parser.description
+        == "Get a non-negative exponent-limit, 'n'  and a prime number 'p' from the command line."
+    )
 
 
 def test_parser_epilog():
@@ -63,14 +67,16 @@ def test_parser_help_message():
     parser = create_parser()
     with pytest.raises(SystemExit) as pytest_wrapped_e:
         parser.parse_args(["-h"])
-    assert pytest_wrapped_e.type == SystemExit
+    assert pytest_wrapped_e.type is SystemExit
     assert pytest_wrapped_e.value.code == 0
+
 
 def test_prime_help_message():
     """Test that the prime argument has a help message."""
     parser = create_parser()
     help_text = parser.format_help()
     assert "-p PRIME" in help_text
+
 
 def test_exponent_limit_help_message():
     """Test that the exponent_limit argument has a help message."""

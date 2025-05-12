@@ -176,7 +176,9 @@ def get_and_validate_args() -> Tuple[int, int]:
     # --- Custom Validation ---
     # Validate exponent-limit: Must be non-negative
     if args.exponent_limit < 0:
-        parser.error(f"Exponent-limit must be a non-negative integer. Received: {args.exponent_limit}")
+        parser.error(
+            f"Exponent-limit must be a non-negative integer. Received: {args.exponent_limit}"
+        )
     # Validate p: Must be prime
     if not isprime(args.prime):
         parser.error(f"Prime must be a prime number. Received: {args.prime}")

@@ -22,7 +22,7 @@ Is it possible to choose $T$ and $U$ such that $\mu(T)=\mu(U)$?
 
 ## The Code
 
-The code in this repo lets you pick a set size, $n$ and a prime, $p$, 
+The code in this repo lets you pick a set size, $n$ and a prime, $p$,
 generates every possible $T$ and $U$, then for all non-intersecting pairs, asks whether any of their means are the same.
 
 ## The Approach for $p=2$
@@ -30,10 +30,10 @@ generates every possible $T$ and $U$, then for all non-intersecting pairs, asks 
 Consider sets of powers of two.
 
 Each subset corresponds to a unique integer.
-Every integer, $k$, can be written, base $2$, as a sum of powers of two. 
+Every integer, $k$, can be written, base $2$, as a sum of powers of two.
 Conversely, every subset of the set of powers of two corresponds to a unique integer.
 
-Using the earlier example, $k_T=101010_2=42_{10}$, and $k_U=10001_2=17_{10}$ 
+Using the earlier example, $k_T=101010_2=42_{10}$, and $k_U=10001_2=17_{10}$
 Testing whether the sets are disjoint (non-intersecting) only requires a boolean "and" of the two integers:
 
 ```
