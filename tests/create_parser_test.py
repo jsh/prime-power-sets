@@ -14,15 +14,15 @@ def test_parser_default_values():
     parser = create_parser()
     args = parser.parse_args([])  # Pass an empty list to get default values
     assert args.prime == 2
-    assert args.size == 0
+    assert args.exponent_limit == 0
 
 
 def test_parser_accepts_prime_and_size():
     """Test that the parser correctly parses prime and size arguments."""
     parser = create_parser()
-    args = parser.parse_args(["-p", "5", "-s", "10"])
+    args = parser.parse_args(["-p", "5", "-n", "10"])
     assert args.prime == 5
-    assert args.size == 10
+    assert args.exponent_limit == 10
 
 
 def test_parser_prime_argument():
@@ -35,5 +35,5 @@ def test_parser_prime_argument():
 def test_parser_size_argument():
     """Test that the parser correctly parses the size argument."""
     parser = create_parser()
-    args = parser.parse_args(["-s", "15"])
-    assert args.size == 15
+    args = parser.parse_args(["-n", "15"])
+    assert args.exponent_limit == 15
