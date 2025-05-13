@@ -1,10 +1,10 @@
-#!uv run
+#!/usr/bin/env -S uv run
 # PEP 723 dependency-block
 # See
 #   https://packaging.python.org/en/latest/specifications/inline-script-metadata/
 # 
 # /// script
-# requires-python = ">=3.13.3"
+# requires-python = ">=3.12"
 # dependencies = [
 #   "mutmut>=3.2.3",
 #   "pandas>=2.2.3",
