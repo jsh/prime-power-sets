@@ -1,3 +1,19 @@
+#!uv run
+# PEP 723 dependency-block
+# See
+#   https://packaging.python.org/en/latest/specifications/inline-script-metadata/
+# 
+# /// script
+# requires-python = ">=3.13.3"
+# dependencies = [
+#   "mutmut>=3.2.3",
+#   "pandas>=2.2.3",
+#   "pre-commit>=4.2.0",
+#   "pytest>=8.3.5",
+#   "pytest-cov>=6.1.1",
+#   "sympy>=1.14.0",
+# ]
+# ///
 import argparse
 import itertools
 import sys
@@ -193,7 +209,7 @@ def main():
     dups = find_exact_float_duplicates_with_indices(seq)
     for dup in dups:
         if find_disjoint_pairs(set(dup[1])):
-            print(dup)
+            print(f"mean={dup[0]}, sets={dup[1]}")
 
 
 if __name__ == "__main__":  # pragma: no cover
