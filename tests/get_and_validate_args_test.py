@@ -15,19 +15,19 @@ def test_get_and_validate_args_default_values(monkeypatch):
     """Test that get_and_validate_args returns default values when no arguments are provided."""
     monkeypatch.setattr("sys.argv", ["script_name.py"])
     n, p = get_and_validate_args()
-    assert n == 0
+    assert n == 1
     assert p == 2
 
 
 def test_get_and_validate_args_invalid_size(monkeypatch):
-    """Test that get_and_validate_args raises SystemExit for negative size."""
+    """Test that get_and_validate_args raises SystemExit for negative limit."""
     monkeypatch.setattr("sys.argv", ["script_name.py", "-n", "-1", "-p", "5"])
     with pytest.raises(SystemExit):
         get_and_validate_args()
 
 
 def test_get_and_validate_args_invalid_prime(monkeypatch):
-    """Test that get_and_validate_args raises SystemExit for non-prime prime."""
+    """Test that get_and_validate_args raises SystemExit for non-prime 'prime'."""
     monkeypatch.setattr("sys.argv", ["script_name.py", "-n", "10", "-p", "4"])
     with pytest.raises(SystemExit):
         get_and_validate_args()

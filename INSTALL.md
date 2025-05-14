@@ -37,7 +37,7 @@ python identical_means.py --help # a synopsis
 ### example
 Look in $S=\lbrace 3^k | 0 < k < 10 \rbrace$ for non-intersecting subsets with identical means.
 ```
-python identical_means.py --exponent_limit 10 --prime 3
+python identical_means.py --limit 10 --prime 3
 ```
 ### a turnkey script
 If `uv` and `python` are installed, you can run the program on your Linux or Mac with
@@ -116,6 +116,6 @@ Here's where mutation testing helps you.
 `mutmut` methodically creates an array of mutatnts of your code, and runs each one against your current test suite. If any mutant still passes,
 your test suite isn't good enough.
 
-For this program, mutmut creates 101 mutants.
+For this program, mutmut creates 104 mutants.
 Each mutant runs to completion, yet all fail the test suite somewhere.
 This gives me a lot more confidence that my tests are solid.

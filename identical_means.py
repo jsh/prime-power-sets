@@ -97,8 +97,8 @@ def generate_bit_count_sequence(n: int, p: int) -> List[float]:
 
     Handles k=0 as 0.0. Raises ValueError for invalid n.
     """
-    if not (isinstance(n, int) and n >= 0):
-        raise ValueError("Input 'n' must be a non-negative integer.")
+    if not (isinstance(n, int) and n > 0):
+        raise ValueError("Input 'n' must be a positive integer.")
     if not (isinstance(p, int) and isprime(p)):
         raise ValueError("Input 'p' must be a prime.")
     # Use a conditional expression within the list comprehension for k=0
@@ -165,15 +165,15 @@ def find_disjoint_pairs(s: Set[int]) -> List[Tuple[int, int]]:
 def create_parser() -> argparse.ArgumentParser:
     """Creates a parser for a non-negative size s and a prime p."""
     parser = argparse.ArgumentParser(
-        description="Get a non-negative exponent-limit, 'n'  and a prime number 'p' from the command line.",
+        description="Find subsets of { p^k | 0 < k < n } with identical means",
         epilog=f"Example: python {sys.argv[0]} -n 10 -p 7",
     )
 
     # Define the positional arguments
     # argparse handles the basic conversion to int and errors if it fails
-    parser.add_argument("-p", "--prime", type=int, help="A prime number.", default=2)
+    parser.add_argument("-p", "--prime", type=int, help="A prime number (default=2).", default=2)
     parser.add_argument(
-        "-n", "--exponent-limit", type=int, help="A non-negative integer.", default=0
+        "-n", "--limit", type=int, help="Limiting exponent for p^n.", default=1
     )
     return parser
 
@@ -190,16 +190,16 @@ def get_and_validate_args() -> Tuple[int, int]:
     # Parse the arguments from the command line
     args = parser.parse_args()
     # --- Custom Validation ---
-    # Validate exponent-limit: Must be non-negative
-    if args.exponent_limit < 0:
+    # Validate exponent-limit: Must be positive
+    if args.limit < 1:
         parser.error(
-            f"Exponent-limit must be a non-negative integer. Received: {args.exponent_limit}"
+            f"'limit' must be a positive integer. Received: {args.limit}"
         )
     # Validate p: Must be prime
     if not isprime(args.prime):
-        parser.error(f"Prime must be a prime number. Received: {args.prime}")
+        parser.error(f"'prime' must be a prime number. Received: {args.prime}")
     # --- Success ---
-    return args.exponent_limit, args.prime
+    return args.limit, args.prime
 
 
 def main():
