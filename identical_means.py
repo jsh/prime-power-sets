@@ -4,7 +4,7 @@
 #   https://packaging.python.org/en/latest/specifications/inline-script-metadata/
 # 
 # /// script
-# requires-python = ">=3.12"
+# requires-python = ">=3.11"
 # dependencies = [
 #   "mutmut>=3.2.3",
 #   "pandas>=2.2.3",

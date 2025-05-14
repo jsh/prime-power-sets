@@ -1,23 +1,23 @@
 # Getting This to Run
 
-
 ## Requirements
-This was developed with Python 3.13.3 and uv 0.7.3, both of which are public and easy to download.
+This requires Python >=3.11 and uv >=0.5.10, both of which are public and easy to download.
 
-If it also happens to work with earlier versions of either, let me know.
+I'm currently using newer versions of both. If it also happens to work with earlier versions of either, let me know.
 
 I wrote this on my Mac M2. As I find other machines it works on, I'll add them to the list.
 
-### Machines
-Macbook Air M2 (2022), 8G memory
+### Machines this is known to run on
+Macbook Air M2 (2022), 8G memory, macOS
+Acer Chromebook Plus 514, AMD Ryzen 3 chip, 8G memory. Container, with 8G memory, runs Penguin Linux 6.6.72, x86_64, Debian 12.10 (bookworm)
+Google Cloud Shell, Container with about 1.7G memory, runs Linux 6.6.72, x86_64, Debian 13 (trixie/sid)
+
 
 ## The code
 
-The program is a single, Python file.
-There's really nothing hard or tricky.
+The program is a single, Python file. There's really nothing hard or clever in the code.
 
 Unit tests are in `tests/`
-
 
 The `README.md` file has more information.
 The easiest way to read it, or any other Markdown (`.md`) file that may be added (like this one),
@@ -25,10 +25,27 @@ is to brows to (https://github.com/jsh/<repo-name>)[the GitHub repo] and click o
 
 ## Running the code
 
+### A turnkey script
+So long as `uv` and `python` are installed, you can run the program on your Linux or Mac with
+`./<program_name>.py` .
+
+The first time you run it, it will take a few seconds to install all the dependencies.
+After that, it'll see the dependencies are installed and launch immediately.
+
+The magic behind turnkey operation *is* clever,
+and is stuffed into a comment block at the top of the code.
+It takes a little patient explaining, but I put a link to the explanation in that block.
+If you don't want to comb through the PPA spec, or read PEP 723, and want me to explain it instead,
+just ask.
+
+### A development environment
+If you want to do improve the app,
+here's the no-magic-required, easier-to-understand, way to play with it.
+
 ```
 git clone https://github.com/jsh/<repo-name> # you already did this
 cd <repo-name>                  # go into the folder
-uv sync                         # install Python packages
+uv sync                         # install Python packages and create virtual environment
 source .venv/bin/activate       # enter virtual environment
 python <program-name>.py --help # how to run the search program
 ```
@@ -41,34 +58,34 @@ To look in S={3^k} for non-intersecting subsets with identical means
 
 ## Testing the code.
 
-If you want to improve the code, there's a test suite of 76 tests
-that you can use to make sure you don't break anything.
+If you decide to improve the code, there's a test suite of 76 tests,
+which you can use to make sure you don't break anything as you tinker.
 
 ```
 pytest              # run the unit tests
 pytest --cov        # find untested lines in the source
-mutmut              # run mutation tests
+mutmut run          # create and run mutation tests
 ```
 
-Right now, the progam passes all 76.
+Right now, the first command runs and passes all 76.
 
-The second of these, coverage testing, runs the test suite,
-watches every line of your code to see which lines are executed,
-and reports all lines that the test suites fail to pass through.
+The second of these commands, coverage testing.
+It runs the test suite, watches every line of your code to see which lines are executed,
+and reports all lines that the test suites don't exercise.
 
-Currently, the suite uses 100% of the executable lines in the program.
+Currently, the suite exercises 100% of the executable lines in the program.
 
-The third of these, mutation testing, can be a little tricky to wrap your head around. I'll try to explain.
+The third command, `mutmut`, does mutation testing, which can be a little tricky to wrap your head around. I'll try to explain.
 
 ### Mutation testing
 
 Unit tests test a particular version of the code.
 Even though the tests exercise every line of the source,
-it's possible to change the code and still pass the tests.
+it's possible to break the code and still pass the tests.
 
 Some changes are invisible to unit tests.
 
-Changing the comment on this line:
+Changing a comment, like this
 ```
 if x > 1  # an unimportant possibility
 ```
@@ -77,23 +94,25 @@ to this:
 if x > 1 # an important possibility
 ```
 
-will not change program behavior. No unit test can detect such misteaks.
+does not change program behavior. No unit test can detect such misteaks.
 
 In contrast, this typo
 ```
 if x >= 1 # an unimportant possibility
 ```
 
-would change the program behavior. But would your tests tell you?
+does change program behavior. But would your tests tell you?
 
-If your tests check that the program behaves differently for `x = 0` and `x = 2`,
+If you test by checking that the program behaves differently for `x = 0` and `x = 2`,
 both the original and the typo would pass.
 Your tests are testing this code, but they won't detect this subtle change.
+
+Your tests aren't good enough.
 Here's where mutation testing helps you.
 
-`mutmut` methodically creates an array of mutatnts of your code, runs each one against your test suite, and reports any mutant that still passes.
+`mutmut` methodically creates an array of mutatnts of your code, and runs each one against your current test suite. If any mutant still passes,
+your test suite isn't good enough.
 
-For this program, mutmut tries 101 mutants.
-All of them run to completion.
-Nevertheless, I've enhanced the test suite so that each mutant fails some test in the test suite.
-
+For this program, mutmut creates 101 mutants.
+Each mutant runs to completion, yet all fail the test suite somewhere.
+This gives me a lot more confidence that my tests are solid.
