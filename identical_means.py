@@ -99,8 +99,10 @@ def generate_bit_count_sequence(n: int, p: int) -> List[float]:
     """
     if not (isinstance(n, int) and n >= 0):
         raise ValueError("Input 'n' must be a non-negative integer.")
-    if not (isinstance(p, int) and isprime(p)):
-        raise ValueError("Input 'p' must be a prime.")
+    # if not (isinstance(p, int) and isprime(p)):
+    #    raise ValueError("Input 'p' must be a prime.")
+    if not isinstance(p, int):
+        raise ValueError("Input 'p' must be an integer.")
     # Use a conditional expression within the list comprehension for k=0
     return [0.0 if k == 0 else basep_analogue(k, p) / k.bit_count() for k in range(n)]
 
@@ -196,8 +198,10 @@ def get_and_validate_args() -> Tuple[int, int]:
             f"Exponent-limit must be a non-negative integer. Received: {args.exponent_limit}"
         )
     # Validate p: Must be prime
-    if not isprime(args.prime):
-        parser.error(f"Prime must be a prime number. Received: {args.prime}")
+    # if not isprime(args.prime):
+    #     parser.error(f"Prime must be a prime number. Received: {args.prime}")
+    if not isinstance(args.prime, int):
+        parser.error(f"Prime must be an integer. Received: {args.prime}")
     # --- Success ---
     return args.exponent_limit, args.prime
 
