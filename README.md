@@ -12,7 +12,7 @@ Next, let $T$ and $U$ be non-empty, non-intersecting subsets of $S$
 * $T, U \neq \emptyset$
 * $T \cap U = \emptyset$
 
-For example, if $S= \lbrace $1, 2, 4, ..., 256 \rbrace$
+For example, if $S= \lbrace 1, 2, 4, ..., 256 \rbrace$
 you could let $T= \lbrace 2, 8, 32 \rbrace$
 and $U= \lbrace 1, 16 \rbrace$
 
@@ -22,18 +22,18 @@ Is it possible to choose $T$ and $U$ such that $\mu(T)=\mu(U)$?
 
 ## The Code
 
-The code in this repo lets you pick a set size, $n$ and a prime, $p$,
-generates every possible $T$ and $U$, then for all non-intersecting pairs, asks whether any of their means are the same.
+The code in this repo lets you pick a prime, $p$ (default=2), and a set size, $2^p$,
+generates every possible $T$ and $U$, then reports non-intersecting pairs with identical means.
 
 ## The Approach for $p=2$
 
 Consider sets of powers of two.
 
-Each subset corresponds to a unique integer.
+Each subset maps, 1 to 1, to a unique integer.
 Every integer, $k$, can be written, base $2$, as a sum of powers of two.
 Conversely, every subset of the set of powers of two corresponds to a unique integer.
 
-Using the earlier example, $k_T=101010_2=42_{10}$, and $k_U=10001_2=17_{10}$
+Using the example above, $k_T=101010_2=42_{10}$, and $k_U=10001_2=17_{10}$
 Testing whether the sets are disjoint (non-intersecting) only requires a boolean "and" of the two integers:
 
 ```
