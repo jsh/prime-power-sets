@@ -1,36 +1,51 @@
 # Getting This to Run
 
 ## Requirements
-This requires Python >=3.11 and uv >=0.5.10, both of which are public and easy to download.
+This requires Python version >=3.11 and uv >=0.5.10, both of which are public and easy to download.
 
-I'm currently using newer versions of both. If it also happens to work with earlier versions of either, let me know.
+I'm currently using newer versions of both. If it also happens to work with even earlier versions of either, let me know.
 
 I wrote this on my Mac M2. As I find other machines it works on, I'll add them to the list.
 
-### Machines this is known to run on
+### Machines I Know This Runs On
 Macbook Air M2 (2022), 8G memory, macOS
 Acer Chromebook Plus 514, AMD Ryzen 3 chip, 8G memory. Container, with 8G memory, runs Penguin Linux 6.6.72, x86_64, Debian 12.10 (bookworm)
 Google Cloud Shell, Container with about 1.7G memory, runs Linux 6.6.72, x86_64, Debian 13 (trixie/sid)
 
 
-## The code
+## The Code
 
-The program is a single, Python file. There's really nothing hard or clever in the code.
+The program, `identical_means.py` is a single, Python file. There's really nothing hard or clever in the code.
 
 Unit tests are in `tests/`
 
 The `README.md` file has more information.
-The easiest way to read it, or any other Markdown (`.md`) file that may be added (like this one),
-is to brows to (https://github.com/jsh/prime-power-sets)[the GitHub repo] and click on the file.
+The easiest way to read it, or any other Markdown (`.md`) file (like this one),
+is to browse to [the GitHub repo](https://github.com/jsh/prime-power-sets) and click on the file.
 
-## Running the code
+## Running the Code
 
-### A turnkey script
+### a development environment
+Here's the no-magic-required, easier-to-understand, way to play with the program.
+```
+git clone https://github.com/jsh/prime-power-sets # you already did this
+cd prime-power-sets             # go into the folder
+uv sync                         # install Python packages and create virtual environment
+source .venv/bin/activate       # enter virtual environment
+python identical_means.py --help # a synopsis
+```
+### example
+Look in $S=\lbrace 3^k | 0 < k < 10 \rbrace$ for non-intersecting subsets with identical means.
+```
+python identical_means.py --exponent_limit 10 --prime 3
+```
+### a turnkey script
 If `uv` and `python` are installed, you can run the program on your Linux or Mac with
-`./identical_means.py` .
-
-The first time you run it, it will take a few seconds to install all the dependencies.
-After that, it'll see the dependencies are installed and launch immediately.
+```
+./identical_means.py
+```
+The first time you run it, it will take a few seconds to install all the packages it needs.
+After that, it'll see its dependencies are installed and launch immediately.
 
 The magic behind turnkey operation *is* clever,
 and is stuffed into a comment block at the top of the code.
@@ -39,29 +54,15 @@ If you don't want to comb through the PPA spec or read PEP 723, and want me to e
 just ask.
 
 N.B.: If your Python development environment has trouble being friends with `uv`, just
-move on to the method in the next section.
-
-### A development environment
-Here's the no-magic-required, easier-to-understand, way to play with the program.
-
-```
-git clone https://github.com/jsh/prime-power-sets # you already did this
-cd prime-power-sets             # go into the folder
-uv sync                         # install Python packages and create virtual environment
-source .venv/bin/activate       # enter virtual environment
-python identical_means.py --help # how to run the search program
-```
-
-### Example
-To look in S={3^k} for non-intersecting subsets with identical means
-
-`python identical_means.py --exponent_limit 10 --prime 3`
-
+use the method in the previous section.
 
 ## Testing the code.
 
-If you decide to improve the code, there's a test suite of 76 tests,
-which you can use to make sure you don't break anything as you tinker.
+There's a unit-test suite of 76 tests,
+which I use to make sure I don't break anything as I tinker.
+Not that I would ever make a misteak ...
+
+In case you want to improve the code, here's how I run these tests:
 
 ```
 pytest              # run the unit tests
@@ -79,7 +80,7 @@ Currently, the suite exercises 100% of the executable lines in the program.
 
 The third command, `mutmut`, does mutation testing, which can be a little tricky to wrap your head around. I'll try to explain.
 
-### Mutation testing
+### what is mutation testing?
 
 Unit tests test a particular version of the code.
 Even though the tests exercise every line of the source,
@@ -96,7 +97,7 @@ to this:
 if x > 1 # an important possibility
 ```
 
-does not change program behavior. No unit test can detect such misteaks.
+does not change program behavior. Sadly, no unit test can detect such mistakes.
 
 In contrast, this typo
 ```
