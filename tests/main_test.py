@@ -30,4 +30,4 @@ def test_main_with_output(capsys):
     with patch("identical_means.get_and_validate_args", return_value=(14, 2)):
         main()
         captured = capsys.readouterr()
-        assert captured.out == "(1259.0, [7554, 8813, 16367])\n"
+        assert captured.out == "mean=1259.0, subsets=[7554, 8813, 16367]\n"

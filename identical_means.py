@@ -2,7 +2,7 @@
 # PEP 723 dependency-block
 # See
 #   https://packaging.python.org/en/latest/specifications/inline-script-metadata/
-# 
+#
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
@@ -209,7 +209,7 @@ def main():
     dups = find_exact_float_duplicates_with_indices(seq)
     for dup in dups:
         if find_disjoint_pairs(set(dup[1])):
-            print(f"mean={dup[0]}, sets={dup[1]}")
+            print(f"mean={dup[0]}, subsets={dup[1]}")
 
 
 if __name__ == "__main__":  # pragma: no cover
