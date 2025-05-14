@@ -21,13 +21,13 @@ Unit tests are in `tests/`
 
 The `README.md` file has more information.
 The easiest way to read it, or any other Markdown (`.md`) file that may be added (like this one),
-is to brows to (https://github.com/jsh/<repo-name>)[the GitHub repo] and click on the file.
+is to brows to (https://github.com/jsh/prime-power-sets)[the GitHub repo] and click on the file.
 
 ## Running the code
 
 ### A turnkey script
-So long as `uv` and `python` are installed, you can run the program on your Linux or Mac with
-`./<program_name>.py` .
+If `uv` and `python` are installed, you can run the program on your Linux or Mac with
+`./identical_means.py` .
 
 The first time you run it, it will take a few seconds to install all the dependencies.
 After that, it'll see the dependencies are installed and launch immediately.
@@ -35,25 +35,27 @@ After that, it'll see the dependencies are installed and launch immediately.
 The magic behind turnkey operation *is* clever,
 and is stuffed into a comment block at the top of the code.
 It takes a little patient explaining, but I put a link to the explanation in that block.
-If you don't want to comb through the PPA spec, or read PEP 723, and want me to explain it instead,
+If you don't want to comb through the PPA spec or read PEP 723, and want me to explain it instead,
 just ask.
 
+N.B.: If your Python development environment has trouble being friends with `uv`, just
+move on to the method in the next section.
+
 ### A development environment
-If you want to do improve the app,
-here's the no-magic-required, easier-to-understand, way to play with it.
+Here's the no-magic-required, easier-to-understand, way to play with the program.
 
 ```
-git clone https://github.com/jsh/<repo-name> # you already did this
-cd <repo-name>                  # go into the folder
+git clone https://github.com/jsh/prime-power-sets # you already did this
+cd prime-power-sets             # go into the folder
 uv sync                         # install Python packages and create virtual environment
 source .venv/bin/activate       # enter virtual environment
-python <program-name>.py --help # how to run the search program
+python identical_means.py --help # how to run the search program
 ```
 
 ### Example
 To look in S={3^k} for non-intersecting subsets with identical means
 
-`python <program-name> --exponent_limit 10 --prime 3`
+`python identical_means.py --exponent_limit 10 --prime 3`
 
 
 ## Testing the code.
@@ -69,7 +71,7 @@ mutmut run          # create and run mutation tests
 
 Right now, the first command runs and passes all 76.
 
-The second of these commands, coverage testing.
+The second of these commands does coverage testing.
 It runs the test suite, watches every line of your code to see which lines are executed,
 and reports all lines that the test suites don't exercise.
 
